@@ -38,14 +38,16 @@ const Login = () => {
       toast.success("Successfully created!");
 
       setTimeout(() => {
-        window.location.href = "/";
+        location.replace("/");
       }, 2000);
+
+      localStorage.setItem("logedn", JSON.stringify(res.data));
     } catch (error) {
       console.log(error);
 
       const errorObj = error as AxiosError<IErrorResponse>;
       // console.log(error);
-      toast.error(`${errorObj.response?.data.error.message}`, );
+      toast.error(`${errorObj.response?.data.error.message}`);
     } finally {
       setLodin(false);
     }
