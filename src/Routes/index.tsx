@@ -9,6 +9,7 @@ import Login from "../auth/Login";
 import ProtectedRoute from "../PrudedctRoute/ProtectedRoute";
 import Home from "../pages/Home";
 import Profile from "../auth/Profile";
+import ErrorHandler from "../Error/ErrorCompontsRoute";
 
 const storageKey = "logedn";
 const userDataString = localStorage.getItem(storageKey);
@@ -16,7 +17,7 @@ const userData = userDataString ? JSON.parse(userDataString) : null;
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
+    <Route path="/" element={<RootLayout />} errorElement ={<ErrorHandler/>}>
       <Route
         index
         element={
