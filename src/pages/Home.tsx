@@ -1,9 +1,22 @@
+import { useState } from "react";
 import Asuntacketded from "../Hooks/Authenticated";
+import Modal from "../ui/Modal";
+import Input from "../ui/Input";
+import Button from "../ui/Button";
 
 const Home = () => {
   const storageKey = "logedn";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
+
+  //handler
+  const [isOpen, setIsOpen] = useState(false);
+
+  //
+
+  const TOgelModel = () => {
+    setIsOpen((prve) => !prve);
+  };
 
   // fetch data from API
   const { data, isLoading } = Asuntacketded({
@@ -29,7 +42,10 @@ const Home = () => {
           >
             {todo.title}
             <div className="flex space-x-5">
-              <button className="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500">
+              <button
+                onClick={TOgelModel}
+                className="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500"
+              >
                 Edit
               </button>
               <button className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
@@ -41,6 +57,15 @@ const Home = () => {
       ) : (
         <h3>data not found</h3>
       )}
+
+      <Modal isOpen={isOpen} closeModal={TOgelModel} title=" mohamde">
+        <Input placeholder="mohamed" />
+
+        <div className="flex justify-center space-x-5 py-2 my-2 ">
+          <Button onClick={TOgelModel}>Cancel</Button>
+          <Button>Edite</Button>
+        </div>
+      </Modal>
     </div>
   );
 };
