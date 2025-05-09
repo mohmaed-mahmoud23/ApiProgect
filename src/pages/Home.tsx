@@ -1,5 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
-import axiosinstance from "../config/axios.config";
+import Asuntacketded from "../Hooks/Authenticated";
 
 const Home = () => {
   const storageKey = "logedn";
@@ -7,16 +6,13 @@ const Home = () => {
   const userData = userDataString ? JSON.parse(userDataString) : null;
 
   // fetch data from API
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = Asuntacketded({
     queryKey: ["todos"],
-    queryFn: async () => {
-      const { data } = await axiosinstance.get("/users/me?populate=todos", {
-        headers: {
-          Authorization: `Bearer ${userData.jwt}`,
-        },
-      });
-
-      return data.todos;
+    url: "/users/me?populate=todos",
+    config: {
+      headers: {
+        Authorization: `Bearer ${userData.jwt}`,
+      },
     },
   });
 
@@ -25,8 +21,8 @@ const Home = () => {
 
   return (
     <div className=" max-w-4xl mx-auto p-4">
-      {data.length ? (
-        data.map((todo) => (
+      {data.todos.length ? (
+        data.todos.map((todo) => (
           <div
             key={todo.id}
             className="flex items-center gap-3 bg-gray-100 p-3 rounded shadow justify-between"
