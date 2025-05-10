@@ -27,4 +27,11 @@ export interface IfomrLogin{
      pattern?: RegExp;
   }
 
+  
+} 
+
+export interface ITodos{
+  id: number;
+  title: string;
+  description:string
 }
