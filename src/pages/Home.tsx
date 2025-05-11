@@ -10,25 +10,22 @@ const Home = () => {
   const storageKey = "logedn";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
-
-  const [editemodel, setEditemodel] = useState<ITodos>({
+  const [editeModel, setEditeModel] = useState<ITodos>({
     id: 0,
     title: "",
     description: "",
   });
-
-  //handler
   const [isOpen, setIsOpen] = useState(false);
 
-  //
+  //handler
 
+  //
   const closeModel = () => {
     setIsOpen(false);
   };
 
-  const isopen = (todo: ITodos) => {
-    setEditemodel(todo);
-
+  const openModel = (todos: ITodos) => {
+    setEditeModel(todos);
     setIsOpen(true);
   };
   // fetch data from API
@@ -56,7 +53,7 @@ const Home = () => {
             {todo.title}
             <div className="flex space-x-5">
               <Button
-                onClick={() => isopen(todo)}
+                onClick={() => openModel(todo)}
                 className="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500"
               >
                 Edit
@@ -70,14 +67,17 @@ const Home = () => {
       ) : (
         <h3>data not found</h3>
       )}
+
       <Modal isOpen={isOpen} closeModal={closeModel} title=" Edite">
-        <Input value={editemodel.title} />
+        <div className=" flex flex-col  space-y-4 px-2 py-2">
+          <Input value={editeModel.title} />
 
-        <Textarea />
+          <Textarea value={editeModel.description} />
 
-        <div className="flex justify-center space-x-5 py-2 my-2 ">
-          <Button onClick={closeModel}>Cancel</Button>
-          <Button>Edite</Button>
+          <div className="flex justify-center space-x-5 py-2 my-2 ">
+            <Button onClick={closeModel}>Cancel</Button>
+            <Button>Edite</Button>
+          </div>
         </div>
       </Modal>
     </div>
